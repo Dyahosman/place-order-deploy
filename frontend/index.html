@@ -31,60 +31,60 @@
     </div>
     </div>
 
-    <script>
-    $(document).ready(function () {
-      $.get("http://localhost:8081/api/items", function (items) {
-        items.forEach(item => {
-          const itemHTML = `
-            <label class="list-group-item d-flex justify-content-between align-items-center">
-              <input type="checkbox" class="item-checkbox mr-2" value='${JSON.stringify(item)}' />
-              <div>${item.name} - $${item.price} - ${item.weight}g</div>
-            </label>
-          `;
-          $("#itemList").append(itemHTML);
-        });
+  <script>
+  $(document).ready(function () {
+    $.get("https://place-order-deploy.onrender.com/api/items", function (items) {
+      items.forEach(item => {
+        const itemHTML = `
+          <label class="list-group-item d-flex justify-content-between align-items-center">
+            <input type="checkbox" class="item-checkbox mr-2" value='${JSON.stringify(item)}' />
+            <div>${item.name} - $${item.price} - ${item.weight}g</div>
+          </label>
+        `;
+        $("#itemList").append(itemHTML);
       });
+    });
 
     $("#placeOrderBtn").click(function () {
       const selectedItems = [];
-        $(".item-checkbox:checked").each(function () {
-          selectedItems.push(JSON.parse($(this).val()));
-        });
+      $(".item-checkbox:checked").each(function () {
+        selectedItems.push(JSON.parse($(this).val()));
+      });
 
-        if (selectedItems.length === 0) {
-          alert("Please select at least one item.");
-          return;
-        }
+      if (selectedItems.length === 0) {
+        alert("Please select at least one item.");
+        return;
+      }
 
-        $.ajax({
-          type: "POST",
-          url: "http://localhost:8081/api/items/placeOrder",
-          contentType: "application/json",
-          data: JSON.stringify(selectedItems),
-          success: function (packages) {
-            $("#packageResults").empty();
-            packages.forEach((pkg, index) => {
-              const pkgHTML = `
-                <div class="card package-card">
-                  <div class="card-body">
-                    <h5 class="card-title">Package ${index + 1}</h5>
-                    <p><strong>Items:</strong> ${pkg.items.join(", ")}</p>
-                    <p><strong>Total weight:</strong> ${pkg.totalWeight}g</p>
-                    <p><strong>Total price:</strong> $${pkg.totalPrice}</p>
-                    <p><strong>Courier price:</strong> $${pkg.courierPrice}</p>
-                  </div>
+      $.ajax({
+        type: "POST",
+        url: "https://place-order-deploy.onrender.com/api/items/placeOrder",
+        contentType: "application/json",
+        data: JSON.stringify(selectedItems),
+        success: function (packages) {
+          $("#packageResults").empty();
+          packages.forEach((pkg, index) => {
+            const pkgHTML = `
+              <div class="card package-card">
+                <div class="card-body">
+                  <h5 class="card-title">Package ${index + 1}</h5>
+                  <p><strong>Items:</strong> ${pkg.items.join(", ")}</p>
+                  <p><strong>Total weight:</strong> ${pkg.totalWeight}g</p>
+                  <p><strong>Total price:</strong> $${pkg.totalPrice}</p>
+                  <p><strong>Courier price:</strong> $${pkg.courierPrice}</p>
                 </div>
-              `;
-              $("#packageResults").append(pkgHTML);
-            });
-          },
-          error: function () {
-            alert("Failed to place order. Please check backend connectivity.");
-          }
-        });
+              </div>
+            `;
+            $("#packageResults").append(pkgHTML);
+          });
+        },
+        error: function () {
+          alert("Failed to place order. Please check backend connectivity.");
+        }
       });
     });
-    </script>
+  });
+</script>
 </body>
 
 </html>
