@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: ordersplit-backend
+    env: java
+    buildCommand: ./mvnw clean package -DskipTests
+    startCommand: java -jar target/ordersplit-1.0.0.jar
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://dpg-d1st3q6r433s73enbf00-a:5432/ordersplit_db
+      - key: SPRING_DATASOURCE_USERNAME
+        value: ordersplit_db_user
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: 9woid2HMxYcyyY7gijvWaMf5D4n6RIKn
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: none
+      - key: SPRING_JPA_SHOW_SQL
+        value: true
+      - key: SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT
+        value: org.hibernate.dialect.PostgreSQLDialect
+      - key: SERVER_PORT
+        value: 8080
