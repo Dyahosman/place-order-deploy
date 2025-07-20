@@ -1,5 +1,6 @@
 com\example\ordersplit\model\PackageResponse.class
-com\example\ordersplit\model\Item.class
 com\example\ordersplit\repository\ItemRepository.class
+com\example\ordersplit\DataSeeder.class
+com\example\ordersplit\model\Item.class
 com\example\ordersplit\OrderSplitApplication.class
 com\example\ordersplit\controller\ItemController.class
